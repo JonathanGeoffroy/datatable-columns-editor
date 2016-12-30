@@ -84,9 +84,11 @@ $.extend(ColumnsEditor.prototype, {
 
     transformValues: function (event, params) {
         this.tableAPI.cells(undefined, params.editor.column).every(function (index) {
-            this.data(params.editor.transformValue(this.data(), index));
+            this.data(params.editor.transformValue(this.data(), this.node(), index));
         });
         this.tableAPI.draw(false);
+
+        return this;
     }
 });
 

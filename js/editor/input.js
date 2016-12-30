@@ -55,8 +55,12 @@ var InputEditor = $.extend({}, BaseEditor, {
             });
     },
 
-    transformValue: function () {
-        return this.$editorInput.val();
+    transformValue: function (oldValue, cell, cellIndex) {
+        return this.changeValue(oldValue, cell, cellIndex) ? this.$editorInput.val() : oldValue;
+    },
+
+    changeValue: function (oldValue, cell, cellIndex) {
+        return $(cell).find('input').length > 0;
     }
 });
 

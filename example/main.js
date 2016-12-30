@@ -26,7 +26,14 @@ $(document).ready(function () {
                             text: 'test',
                             type: 'number'
                         }
-
+                    },
+                    render: function (value, type, row, meta) {
+                        if(meta.row % 2 === 0) {
+                            return $('<input/>', {
+                                value: value
+                            })[0].outerHTML;
+                        }
+                        return value;
                     }
                 }
             ]

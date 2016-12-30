@@ -54,8 +54,11 @@ var BaseEditor = {
 
     register: function (callback) {
         this.$dom.on('update.editors.dt', callback);
-    }
+    },
 
+    transformValue: function (oldValue, cell, cellIndex) {
+        return oldValue;
+    }
 };
 
 module.exports = BaseEditor;
