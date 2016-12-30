@@ -66,7 +66,7 @@ var InputEditor = $.extend({}, BaseEditor, {
     },
 
     changeValue: function (oldValue, cell, cellIndex) {
-        return $(cell).find('input').length > 0;
+        return $(cell).find('input:not(:hidden)').length > 0;
     }
 });
 

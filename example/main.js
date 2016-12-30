@@ -30,10 +30,14 @@ $(document).ready(function () {
                     render: function (value, type, row, meta) {
                         if(meta.row % 2 === 0) {
                             return $('<input/>', {
-                                value: value
+                                value: value,
+                                type: 'number'
                             })[0].outerHTML;
                         }
-                        return value;
+                        return $('<input/>', {
+                            value: value,
+                            type: 'hidden'
+                        })[0].outerHTML + value;
                     }
                 }
             ]
