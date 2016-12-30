@@ -1,0 +1,31 @@
+{
+  "name": "datatable-cplumns-edit",
+  "description": "A datatable module able to change all values of a column",
+  "author": "JonathanGeoffroy <geoffroy.jonathan@gmail.com>",
+  "version": "0.1.0",
+  "files": [
+    "js/",
+    "css/"
+  ],
+  "browserify-shim": {
+    "jquery": "global:$"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "dependencies": {
+    "datatables.net": ">=1.10.0",
+    "jquery": ">= 1.7.0"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "browserify-shim": "latest",
+    "uglifyjs": "^2.4.10"
+  },
+  "scripts": {
+    "build-debug": "browserify js/main.js -d  > dist/datatable-columns-editor.js",
+    "build-min": "uglifyjs dist/datatable-columns-editor.js > dist/datatable-columns-editor.min.js",
+    "build": "npm run build-debug && npm run build-min"
+  },
+  "license": "MIT"
+}

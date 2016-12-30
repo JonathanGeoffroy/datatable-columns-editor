@@ -1,0 +1,19 @@
+.columns-editor {
+    z-index: 1;
+    text-align: right;
+    position:relative;
+    float: right;
+}
+
+.columns-header-label {
+    position: absolute;
+    z-index: 0;
+}
+
+.columns-editor-input {
+    width: 55px;
+}
+
+.column-editor-button {
+    width:25px;
+}
