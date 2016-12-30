@@ -36,11 +36,21 @@ var InputEditor = $.extend({}, BaseEditor, {
         var self = this;
         this.open();
         this.$editorInput = $('.columns-editor-input', this.$dom)
-            // .one('focusout', function (e) {
-            //     setTimeout(function () {
-            //             self.notifyClose();
-            //     }, 100);
-            // })
+            // Prevent from sorting column when user clicks on input
+            .click(function(event) {
+                event.stopPropagation();
+            })
+            .keypress(function (event) {
+                event.stopPropagation();
+                switch (event.key) {
+                    case 'Escape':
+                        self.close();
+                        break;
+                    case 'Enter':
+                        self.notifyChange();
+                        break;
+                }
+            })
             .focus();
 
         $('.columns-editor-button', this.$dom)
@@ -48,10 +58,6 @@ var InputEditor = $.extend({}, BaseEditor, {
                 e.preventDefault();
                 e.stopPropagation();
                 self.notifyChange();
-                self.notifyClose();
-                if(self.onValueChanged) {
-                    self.onValueChanged();
-                }
             });
     },
 

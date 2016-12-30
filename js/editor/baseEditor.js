@@ -11,7 +11,7 @@ var BaseEditor = {
             'class': 'btn btn-link pull-right columns-edit-button'
         });
         editButton.append($('<img/>', $.extend({
-                src: this.editImg
+                src: '../img/edit.png'
             }, this.editButtonAttrs)
         ));
 
@@ -42,15 +42,15 @@ var BaseEditor = {
 
     notifyOpen: function () {},
 
-    notifyClose: function () {
-        this.close();
-    },
-
     notifyChange: function () {
+        this.onValueChanged();
+        this.close();
         this.$dom.trigger('update.editors.dt', {
             editor: this
         });
     },
+
+    onValueChanged: function () {},
 
     register: function (callback) {
         this.$dom.on('update.editors.dt', callback);
