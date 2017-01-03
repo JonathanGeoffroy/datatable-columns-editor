@@ -8,35 +8,40 @@ var ButtonEditor = $.extend({}, BaseEditor, {
 
     create: function () {
         var $button = $('<button/>', $.extend({
-            'class': 'btn btn-default columns-editor-button'
-        }, this.buttAttrs));
+            'class': 'btn btn-default columns-editor-button',
+            'text': 'click-me',
+        }, this.buttonAttrs));
 
         // FIXME: Code duplication
+        var $editor = $('<span/>', {
+            'class': 'pull-right columns-editor'
+        })
+        .append($button)
+        .hide();
+
         var label = this.$dom.text();
         this.$dom.html($('<span/>', {
             class: 'columns-header-label',
             text: label
         }))
-        .append($button);
+        .append($editor);
 
         return this;
     },
 
     notifyOpen: function () {
         var self = this;
-        this.open();
 
         $('.columns-editor-button', this.$dom)
             .one('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                self.notifyChange();
-                self.notifyClose();
-            });
+                this.onClick();
+            }.bind(this));
     },
 
-    transformValue: function (value) {
-        return value;
+    onClick: function () {
+        this.notifyChange();
     }
 });
 

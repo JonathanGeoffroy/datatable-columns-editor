@@ -12,16 +12,16 @@ var ColumnsEditor = function (settings) {
     this.tableAPI = new $.fn.dataTable.Api(settings);
     this.$header = $(this.tableAPI.table().header());
 
-    var editors = [];
-    settings.aoColumns.forEach(function (param, col) {
-        if (param.editor) {
-            var options = $.extend({
-                column: col,
-            }, param.editor);
+    var editors = settings.aoColumns.filter(function (column) {
+        return column.editor;
+    })
+    .map(function (param) {
+        var options = $.extend({
+            column: param.idx,
+            property: param.data
+        }, param.editor);
 
-            var editor = this.builders[param.editor.type](options);
-            editors.push(editor);
-        }
+        return this.builders[param.editor.type](options);
     }, this);
 
     if(editors.length > 0) {
@@ -83,10 +83,9 @@ $.extend(ColumnsEditor.prototype, {
     },
 
     transformValues: function (event, params) {
-        this.tableAPI.cells(undefined, params.editor.column).every(function (index) {
-            this.data(params.editor.transformValue(this.data(), this.node(), index));
-        });
-        this.tableAPI.draw(false);
+        var newValues = params.editor.transformValues(this.tableAPI.data().toArray());
+        this.tableAPI.clear().rows.add(newValues);
+        this.drawTable();
 
         return this;
     }

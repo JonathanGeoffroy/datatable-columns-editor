@@ -7,14 +7,17 @@ var ColumnsEditor = require('../columnsEditor');
 var InputEditor = $.extend({}, BaseEditor, {
 
     create: function () {
-        var $editorInput = $('<input/>', {
-            'class': 'columns-editor-input'
-        });
-        var $editorButton = $('<button/>',$.extend({
+        var $editorInput = $('<input/>', $.extend({
+                'class': 'columns-editor-input'
+            }, this.inputAttrs)
+        );
+
+        var $editorButton = $('<button/>', $.extend({
                 'class': 'btn btn-default columns-editor-button',
                 'text': 'OK'
             }, this.validateButtonAttrs)
         );
+
         var $editor = $('<span/>', {
             'class': 'pull-right columns-editor'
         })
@@ -33,8 +36,6 @@ var InputEditor = $.extend({}, BaseEditor, {
     },
 
     notifyOpen: function () {
-        var self = this;
-        this.open();
         this.$editorInput = $('.columns-editor-input', this.$dom)
             // Prevent from sorting column when user clicks on input
             .click(function(event) {
@@ -44,29 +45,37 @@ var InputEditor = $.extend({}, BaseEditor, {
                 event.stopPropagation();
                 switch (event.key) {
                     case 'Escape':
-                        self.close();
+                        this.close();
                         break;
                     case 'Enter':
-                        self.notifyChange();
+                        this.notifyChange();
                         break;
                 }
-            })
+            }.bind(this))
             .focus();
 
         $('.columns-editor-button', this.$dom)
             .one('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                self.notifyChange();
-            });
+                this.notifyChange();
+            }.bind(this));
     },
 
-    transformValue: function (oldValue, cell, cellIndex) {
-        return this.changeValue(oldValue, cell, cellIndex) ? this.$editorInput.val() : oldValue;
+    transformValues: function (dataRows) {
+        var newValue = this.$dom.find(':input').val();
+
+        return dataRows.map(function (row, index) {
+            if(this.canChangeValue(row[this.property], index, row)) {
+                row[this.property] = newValue;
+            }
+
+            return row;
+        }.bind(this));
     },
 
-    changeValue: function (oldValue, cell, cellIndex) {
-        return $(cell).find('input:not(:hidden)').length > 0;
+    canChangeValue: function (value, columnIndex, row) {
+        return true;
     }
 });
 

@@ -24,6 +24,7 @@ var BaseEditor = {
         editButton.click(function (e) {
             e.preventDefault();
             e.stopPropagation();
+            self.open();
             self.notifyOpen();
         });
     },
@@ -43,14 +44,11 @@ var BaseEditor = {
     notifyOpen: function () {},
 
     notifyChange: function () {
-        this.onValueChanged();
         this.close();
         this.$dom.trigger('update.editors.dt', {
             editor: this
         });
     },
-
-    onValueChanged: function () {},
 
     register: function (callback) {
         this.$dom.on('update.editors.dt', callback);

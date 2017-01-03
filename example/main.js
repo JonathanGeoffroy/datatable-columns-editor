@@ -6,7 +6,17 @@ $(document).ready(function () {
             sAjaxDataProp: '',
             columns: [
                 {
-                    data: 'email'
+                    data: 'email',
+                    editor: {
+                        type: 'button',
+                        transformValues: function (dataRows) {
+                            return dataRows.map(function (row, index) {
+                                row.email = row.email.split("").reverse().join("");
+                                return row;
+                            }.bind(this));
+
+                        }
+                    }
                 },
                 {
                     data: 'name',
@@ -23,21 +33,11 @@ $(document).ready(function () {
                     editor: {
                         type: 'input',
                         inputAttrs: {
-                            text: 'test',
                             type: 'number'
+                        },
+                        validateButtonAttrs: {
+                            text: 'test'
                         }
-                    },
-                    render: function (value, type, row, meta) {
-                        if(meta.row % 2 === 0) {
-                            return $('<input/>', {
-                                value: value,
-                                type: 'number'
-                            })[0].outerHTML;
-                        }
-                        return $('<input/>', {
-                            value: value,
-                            type: 'hidden'
-                        })[0].outerHTML + value;
                     }
                 }
             ]
