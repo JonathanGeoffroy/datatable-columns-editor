@@ -1,22 +1,28 @@
 'use strict';
 
 var $ = require('jquery');
-var BaseEditor = require('./baseEditor')
+var BaseEditor = require('./baseEditor');
 var ColumnsEditor = require('../columnsEditor');
 
+/**
+ * An editor which render an input text,
+ * and set all column's cells to the input's value when user validates
+ */
 var InputEditor = $.extend({}, BaseEditor, {
 
+    /**
+     * Creates the input and its validation button
+     * @returns {InputEditor} InputEditor
+     */
     create: function () {
         var $editorInput = $('<input/>', $.extend({
-                'class': 'columns-editor-input'
-            }, this.inputAttrs)
-        );
+            'class': 'columns-editor-input'
+        }, this.inputAttrs));
 
         var $editorButton = $('<button/>', $.extend({
-                'class': 'btn btn-default columns-editor-button',
-                'text': 'OK'
-            }, this.validateButtonAttrs)
-        );
+            'class': 'btn btn-default columns-editor-inputbutton',
+            'text': 'OK'
+        }, this.validateButtonAttrs));
 
         var $editor = $('<span/>', {
             'class': 'pull-right columns-editor'
@@ -35,6 +41,9 @@ var InputEditor = $.extend({}, BaseEditor, {
         return this;
     },
 
+    /**
+     * listen for input changes
+     */
     notifyOpen: function () {
         this.$editorInput = $('.columns-editor-input', this.$dom)
             // Prevent from sorting column when user clicks on input
@@ -44,17 +53,17 @@ var InputEditor = $.extend({}, BaseEditor, {
             .keypress(function (event) {
                 event.stopPropagation();
                 switch (event.key) {
-                    case 'Escape':
-                        this.close();
-                        break;
-                    case 'Enter':
-                        this.notifyChange();
-                        break;
+                case 'Escape':
+                    this.close();
+                    break;
+                case 'Enter':
+                    this.notifyChange();
+                    break;
                 }
             }.bind(this))
             .focus();
 
-        $('.columns-editor-button', this.$dom)
+        $('.columns-editor-inputbutton', this.$dom)
             .one('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -62,6 +71,12 @@ var InputEditor = $.extend({}, BaseEditor, {
             }.bind(this));
     },
 
+    /**
+     * Set each cell to the input's value.
+     * Only changes a cell's value if <b>canChangeValue</b> returns true for the provided cell
+     * @param {Array} dataRows the entire DataTable's dataset
+     * @returns {Array} the same dataRows, but with values changed
+     */
     transformValues: function (dataRows) {
         var newValue = this.$dom.find(':input').val();
 
@@ -74,13 +89,23 @@ var InputEditor = $.extend({}, BaseEditor, {
         }.bind(this));
     },
 
-    canChangeValue: function (value, columnIndex, row) {
+    /**
+     * Specify if a cell is editable
+     * In ths implemenation, always returns true.
+     * Can be overrided in order to choose which cells can be changed
+     *
+     * @param {Any} value the cell's value
+     * @param {number} rowIndex the row's index
+     * @param {object} row the row's dataset
+     * @return {boolean} always true
+     */
+    canChangeValue: function () {
         return true;
     }
 });
 
 ColumnsEditor.prototype.builders.input = function(settings) {
-  return $.extend({}, InputEditor, settings);
+    return $.extend({}, InputEditor, settings);
 };
 
 module.exports = InputEditor;

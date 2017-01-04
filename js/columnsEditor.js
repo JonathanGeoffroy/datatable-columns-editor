@@ -1,12 +1,14 @@
 'use strict';
 
+var $ = require('jquery');
+
 /**
- * Filters is a component that manages a list of filters object inside
+ * ColumnsEditor is a component that manages a list of filters indside
  * a datatable header row.
  *
  * This constructor binds listeners to various datatable events.
  *
- * @param settings {Object} settings object used to create the datatable
+ * @param {Object} settings object used to create the datatable
  */
 var ColumnsEditor = function (settings) {
     this.tableAPI = new $.fn.dataTable.Api(settings);
@@ -33,21 +35,21 @@ var ColumnsEditor = function (settings) {
 $.extend(ColumnsEditor.prototype, {
 
     /**
-     * Array of filter constructor function. Each function
+     * Array of editor constructor function. Each function
      * takes a setting object as its single parameter
      */
     builders: {},
 
     /**
-     * Initializes the header HTML elements that will be used to hold the filters.
-     * It also registers the main event handler that will react to the filters'
+     * Initialize all editors and add them into datatable header
+     * It also registers the main event handler that will react to the editor'
      * value changes.
      *
-     * The event name is <b>filterChange</b>. This event must be triggered by the
-     * filters when their value is modified by the user (or any other event that
+     * The event name is <b>update.editors.dt</b>. This event must be triggered by the
+     * editors when their value is modified by the user (or any other event that
      * should trigger a datatable filter).
      *
-     * @returns {Filters}
+     * @returns {ColumnsEditor} the ColumnsEditor object
      */
     setupHeaderRow: function () {
         this.editors.forEach(function (editor) {
@@ -61,7 +63,7 @@ $.extend(ColumnsEditor.prototype, {
     /**
      * Redraws the datatable
      *
-     * @returns {Filters}
+     * @returns {ColumnsEditor} the ColumnsEditor object
      */
     drawTable: function () {
         this.tableAPI.draw();
@@ -71,10 +73,9 @@ $.extend(ColumnsEditor.prototype, {
 
     /**
      * Actions to execute when the datatable is done initializing.
-     * Creates the filter header row, registers ajax listeners and
-     * renders filters
+     * Create and add  all editors into the dataTable header
      *
-     * @returns {Filters}
+     * @returns {ColumnsEditor} the ColumnsEditor object
      */
     onDataTableInit: function () {
         this.setupHeaderRow();
@@ -82,6 +83,15 @@ $.extend(ColumnsEditor.prototype, {
         return this;
     },
 
+    /**
+     * Transform values of the entire dataTable
+     * Ask to the editor that has changed to transform data,
+     * and then re-render the datatable
+     *
+     * @param {Event} event triggered Event
+     * @param {object} params editor's params
+     * @returns {ColumnsEditor} the ColumnsEditor object
+     */
     transformValues: function (event, params) {
         var newValues = params.editor.transformValues(this.tableAPI.data().toArray());
         this.tableAPI.clear().rows.add(newValues);
