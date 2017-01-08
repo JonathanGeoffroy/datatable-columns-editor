@@ -22,10 +22,13 @@
     "browserify": "latest",
     "browserify-shim": "latest",
     "eslint": "^3.12.2",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "mocha": "*",
+    "chai" : "*"
   },
   "scripts": {
-     "lint": "eslint js",
+    "test": "mocha-phantomjs ./test/test.html",
+    "lint": "eslint js",
     "build-debug": "browserify js/main.js -d  > dist/datatable-columns-editor.js",
     "build-min": "uglifyjs dist/datatable-columns-editor.js > dist/datatable-columns-editor.min.js",
     "build": "npm run build-debug && npm run build-min"

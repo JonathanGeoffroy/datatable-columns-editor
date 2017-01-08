@@ -44,9 +44,5 @@ $(document).ready(function () {
                 }
             ]
         });
-
-        $('#reloadAjax').click(function () {
-            table.ajax.url('./data2.json').ajax.reload();
-        });
     }
 );

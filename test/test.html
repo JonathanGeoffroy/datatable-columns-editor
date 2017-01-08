@@ -1,0 +1,98 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- encoding must be set for mocha's special characters to render properly -->
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css"/>
+</head>
+<body>
+<div id="mocha"></div>
+<table id="exampleTable">
+    <thead>
+    <tr>
+        <th>
+            Email
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            Company
+        </th>
+        <th>
+            # friends
+        </th>
+    </tr>
+    </thead>
+</table>
+
+<script src="../node_modules/mocha/mocha.js"></script>
+<script src="../node_modules/chai/chai.js"></script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script src="../dist/datatable-columns-editor.js"></script>
+<script>
+    mocha.ui('bdd');
+    mocha.reporter('html');
+
+
+    $('#exampleTable').DataTable({
+        ajax: {
+            url: "./data.json"
+        },
+        sAjaxDataProp: '',
+        columns: [
+            {
+                data: 'email',
+                editor: {
+                    type: 'button',
+                    transformValues: function (dataRows) {
+                        return dataRows.map(function (row, index) {
+                            row.email = row.email.split("").reverse().join("");
+                            return row;
+                        }.bind(this));
+                    },
+                    buttonAttrs: {
+                        text: 'reverse emails'
+                    }
+                }
+            },
+            {
+                data: 'name',
+                visible: false
+            },
+            {
+                data: 'gender'
+            },
+            {
+                data: 'company'
+            },
+            {
+                data: 'friends',
+                editor: {
+                    type: 'input',
+                    inputAttrs: {
+                        type: 'number'
+                    },
+                    validateButtonAttrs: {
+                        text: 'test'
+                    }
+                }
+            }
+        ]
+    });
+</script>
+<script src="./columnsEditor.test.js"></script>
+
+<script>
+    if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+    }
+    else {
+        mocha.run();
+    }
+</script>
+</body>
+</html>

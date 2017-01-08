@@ -1,7 +1,6 @@
 'use strict';
 
 var $ = require('jquery');
-var editor = require('./editor');
 
 /**
  * An editor which toggles its field
@@ -30,13 +29,13 @@ var Editor = {
 
         // Create the toggle buttons
         this.$openButton = $('<button/>', {
-            'class': 'columns-edit-button'
+            'class': 'columns-edit-button columns-edit-open'
         }).append($('<img/>', $.extend({
             src: '../img/edit.png'
         }, this.openButtonAttrs)));
 
         this.$closeButton = $('<button/>', {
-            'class': 'columns-edit-button'
+            'class': 'columns-edit-button columns-edit-close'
         }).append($('<img/>', {
             src: '../img/back.png'
         })).hide();

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Gates Bill",
+    "gender": "unknown",
+    "company": "Micro$oft",
+    "email": "bgates@micro$oft.com",
+    "friends": 3
+  },
+  {
+    "name": "Caseyy Paul",
+    "gender": "female",
+    "company": "GINK",
+    "email": "caseypaul@gink.com",
+    "friends": 4
+  },
+  {
+    "name": "Mavis Page",
+    "gender": "female",
+    "company": "STROZEN",
+    "email": "mavispage@strozen.com",
+    "friends": 7
+  },
+  {
+    "name": "Klein Cotton",
+    "gender": "male",
+    "company": "NURALI",
+    "email": "kleincotton@nurali.com",
+    "friends": 44
+  },
+  {
+    "name": "Sheena Aguilar",
+    "gender": "female",
+    "company": "TERSANKI",
+    "email": "sheenaaguilar@tersanki.com",
+    "friends": 13
+  },
+  {
+    "name": "Noble Kirkland",
+    "gender": "male",
+    "company": "NURPLEX",
+    "email": "noblekirkland@nurplex.com",
+    "friends": 8
+  }
+]
