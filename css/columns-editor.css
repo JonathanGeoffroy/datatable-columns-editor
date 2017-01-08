@@ -1,19 +1,22 @@
-.columns-editor {
-    z-index: 1;
-    text-align: right;
-    position:relative;
-    float: right;
-}
-
-.columns-header-label {
-    position: absolute;
-    z-index: 0;
-}
-
-.columns-editor-input {
-    width: 55px;
+.columns-editor, columns-header-label {
+    min-width: 75%;
 }
 
 .columns-edit-button {
-    width:25px;
+    max-width: 25%;
+    text-align: right;
+    float: right;
+    background-color: transparent;
+    border-color: transparent;
+    margin: 0;
+    padding: 2px 4px;
 }
+
+.columns-input-input {
+    width: 45%;
+}
+.columns-input-button {
+    width: 30%;
+    padding: 2px 4px;
+}
+

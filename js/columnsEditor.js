@@ -13,6 +13,7 @@ var $ = require('jquery');
 var ColumnsEditor = function (settings) {
     this.tableAPI = new $.fn.dataTable.Api(settings);
     this.$header = $(this.tableAPI.table().header());
+    this.settings = settings;
 
     var editors = settings.aoColumns.filter(function (column) {
         return column.editor;
@@ -23,7 +24,7 @@ var ColumnsEditor = function (settings) {
             property: param.data
         }, param.editor);
 
-        return this.builders[param.editor.type](options);
+        return this.fields[param.editor.type](options);
     }, this);
 
     if(editors.length > 0) {
@@ -35,10 +36,10 @@ var ColumnsEditor = function (settings) {
 $.extend(ColumnsEditor.prototype, {
 
     /**
-     * Array of editor constructor function. Each function
+     * Array of field constructor function. Each function
      * takes a setting object as its single parameter
      */
-    builders: {},
+    fields: {},
 
     /**
      * Initialize all editors and add them into datatable header
@@ -61,7 +62,7 @@ $.extend(ColumnsEditor.prototype, {
     },
 
     /**
-     * Redraws the datatable
+     * Redraws the dataTable
      *
      * @returns {ColumnsEditor} the ColumnsEditor object
      */
@@ -72,7 +73,7 @@ $.extend(ColumnsEditor.prototype, {
     },
 
     /**
-     * Actions to execute when the datatable is done initializing.
+     * Actions to execute when the dataTable is done initializing.
      * Create and add  all editors into the dataTable header
      *
      * @returns {ColumnsEditor} the ColumnsEditor object
@@ -86,7 +87,7 @@ $.extend(ColumnsEditor.prototype, {
     /**
      * Transform values of the entire dataTable
      * Ask to the editor that has changed to transform data,
-     * and then re-render the datatable
+     * and then re-render the dataTable
      *
      * @param {Event} event triggered Event
      * @param {object} params editor's params

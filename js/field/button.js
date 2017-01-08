@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
-var BaseEditor = require('./baseEditor');
+var Editor = require('./../editor/editor');
 var ColumnsEditor = require('../columnsEditor');
 
 /**
@@ -9,33 +9,19 @@ var ColumnsEditor = require('../columnsEditor');
  * Does nothing by default: you must implements <b>transformValues</b>
  * in order to perform the changes each time the button is clicked
  */
-var ButtonEditor = $.extend({}, BaseEditor, {
+var ButtonField = {
 
     /**
      * Creates the button
-     * @returns {ButtonEditor} Editor
+     * @returns {ButtonField} Editor
      */
     create: function () {
-        var $button = $('<button/>', $.extend({
+        this.$button = $('<button/>', $.extend({
             'class': 'btn btn-default columns-editor-button',
-            'text': 'click-me',
+            'text': 'click-me'
         }, this.buttonAttrs));
 
-        // FIXME: Code duplication
-        var $editor = $('<span/>', {
-            'class': 'pull-right columns-editor'
-        })
-        .append($button)
-        .hide();
-
-        var label = this.$dom.text();
-        this.$dom.html($('<span/>', {
-            class: 'columns-header-label',
-            text: label
-        }))
-        .append($editor);
-
-        return this;
+        return this.$button;
     },
 
     /**
@@ -56,10 +42,10 @@ var ButtonEditor = $.extend({}, BaseEditor, {
     onClick: function () {
         this.notifyChange();
     }
-});
-
-ColumnsEditor.prototype.builders.button = function(settings) {
-    return $.extend({}, ButtonEditor, settings);
 };
 
-module.exports = ButtonEditor;
+ColumnsEditor.prototype.fields.button = function(settings) {
+    return $.extend({}, Editor, ButtonField, settings);
+};
+
+module.exports = ButtonField;

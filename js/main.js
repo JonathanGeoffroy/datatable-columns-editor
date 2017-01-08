@@ -1,6 +1,6 @@
 'use strict';
 
-require('./editor/baseEditor');
-require('./editor/input');
-require('./editor/button');
+require('./editor/editor');
+require('./field/input');
+require('./field/button');
 require('./columnsEditor');

@@ -14,7 +14,9 @@ $(document).ready(function () {
                                 row.email = row.email.split("").reverse().join("");
                                 return row;
                             }.bind(this));
-
+                        },
+                        buttonAttrs: {
+                            text: 'reverse emails'
                         }
                     }
                 },

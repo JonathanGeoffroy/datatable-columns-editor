@@ -1,5 +1,5 @@
 {
-  "name": "datatable-cplumns-edit",
+  "name": "datatable-columns-editor",
   "description": "A datatable plugins to change column's values",
   "author": "JonathanGeoffroy <geoffroy.jonathan@gmail.com>",
   "version": "0.1.0",
